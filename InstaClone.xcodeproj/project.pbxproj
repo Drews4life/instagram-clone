@@ -9,12 +9,18 @@
 /* Begin PBXBuildFile section */
 		36CC75508B6F9F47F1434084 /* Pods_InstaClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 576B4CB685A0271AECFE8836 /* Pods_InstaClone.framework */; };
 		66090669222AB23200ABDEF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090668222AB23200ABDEF6 /* AppDelegate.swift */; };
-		6609066B222AB23200ABDEF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609066A222AB23200ABDEF6 /* ViewController.swift */; };
+		6609066B222AB23200ABDEF6 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */; };
 		6609066E222AB23200ABDEF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6609066C222AB23200ABDEF6 /* Main.storyboard */; };
 		66090670222AB23400ABDEF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6609066F222AB23400ABDEF6 /* Assets.xcassets */; };
 		66090673222AB23400ABDEF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66090671222AB23400ABDEF6 /* LaunchScreen.storyboard */; };
 		6609067D222AC4E300ABDEF6 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609067C222AC4E300ABDEF6 /* UIViewExt.swift */; };
 		6609067F222AC84600ABDEF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6609067E222AC84600ABDEF6 /* GoogleService-Info.plist */; };
+		66090681222B073C00ABDEF6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090680222B073C00ABDEF6 /* MainTabBarController.swift */; };
+		66090684222B085A00ABDEF6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090683222B085A00ABDEF6 /* UserProfileViewController.swift */; };
+		66090687222B17CB00ABDEF6 /* UserHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090686222B17CB00ABDEF6 /* UserHeader.swift */; };
+		660ABDBC222C3BAD00AAB7A3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660ABDBB222C3BAD00AAB7A3 /* User.swift */; };
+		660ABDBE222C621900AAB7A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660ABDBD222C621900AAB7A3 /* Constants.swift */; };
+		660ABDC0222C6AA700AAB7A3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,13 +29,19 @@
 		5CB5831074D06A8F7DF6DC3F /* Pods-InstaClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaClone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstaClone/Pods-InstaClone.debug.xcconfig"; sourceTree = "<group>"; };
 		66090665222AB23200ABDEF6 /* InstaClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66090668222AB23200ABDEF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6609066A222AB23200ABDEF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		6609066D222AB23200ABDEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6609066F222AB23400ABDEF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66090672222AB23400ABDEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66090674222AB23400ABDEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6609067C222AC4E300ABDEF6 /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		6609067E222AC84600ABDEF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		66090680222B073C00ABDEF6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		66090683222B085A00ABDEF6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		66090686222B17CB00ABDEF6 /* UserHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeader.swift; sourceTree = "<group>"; };
+		660ABDBB222C3BAD00AAB7A3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		660ABDBD222C621900AAB7A3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,10 +94,12 @@
 		66090667222AB23200ABDEF6 /* InstaClone */ = {
 			isa = PBXGroup;
 			children = (
+				660ABDBA222C3B9500AAB7A3 /* Models */,
+				66090685222B17B500ABDEF6 /* Views */,
+				66090682222B07AE00ABDEF6 /* Controllers */,
 				6609067B222ABE2400ABDEF6 /* Extensions */,
 				6609067A222ABE1A00ABDEF6 /* Utils */,
 				66090668222AB23200ABDEF6 /* AppDelegate.swift */,
-				6609066A222AB23200ABDEF6 /* ViewController.swift */,
 				6609066C222AB23200ABDEF6 /* Main.storyboard */,
 				6609066F222AB23400ABDEF6 /* Assets.xcassets */,
 				66090671222AB23400ABDEF6 /* LaunchScreen.storyboard */,
@@ -98,6 +112,7 @@
 		6609067A222ABE1A00ABDEF6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				660ABDBD222C621900AAB7A3 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -108,6 +123,33 @@
 				6609067C222AC4E300ABDEF6 /* UIViewExt.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66090682222B07AE00ABDEF6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */,
+				660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */,
+				66090680222B073C00ABDEF6 /* MainTabBarController.swift */,
+				66090683222B085A00ABDEF6 /* UserProfileViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		66090685222B17B500ABDEF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66090686222B17CB00ABDEF6 /* UserHeader.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		660ABDBA222C3B9500AAB7A3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				660ABDBB222C3BAD00AAB7A3 /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,9 +287,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				660ABDC0222C6AA700AAB7A3 /* LoginViewController.swift in Sources */,
 				6609067D222AC4E300ABDEF6 /* UIViewExt.swift in Sources */,
-				6609066B222AB23200ABDEF6 /* ViewController.swift in Sources */,
+				66090684222B085A00ABDEF6 /* UserProfileViewController.swift in Sources */,
+				6609066B222AB23200ABDEF6 /* CreateAccountViewController.swift in Sources */,
+				66090681222B073C00ABDEF6 /* MainTabBarController.swift in Sources */,
 				66090669222AB23200ABDEF6 /* AppDelegate.swift in Sources */,
+				66090687222B17CB00ABDEF6 /* UserHeader.swift in Sources */,
+				660ABDBC222C3BAD00AAB7A3 /* User.swift in Sources */,
+				660ABDBE222C621900AAB7A3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

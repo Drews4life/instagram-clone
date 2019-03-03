@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateAccountViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     let plusButton: UIButton = {
         let button = UIButton(type: .system)
@@ -69,9 +69,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return button
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.color = .black
+        activity.stopAnimating()
+        
+        return activity
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        view.backgroundColor = .white
         view.addSubview(plusButton)
         
         plusButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -79,6 +88,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         setupInputFields()
         
+       
     }
     
     func setupInputFields() {
@@ -96,6 +106,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         view.addSubview(stackView)
         
         stackView.anchor(top: plusButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: nil, paddingTop: 20, paddingRight: 40, paddingLeft: 40, paddingBottom: 0, width: 0, height: 200)
+        
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.anchor(top: stackView.bottomAnchor, left: nil, right: nil, bottom: nil, paddingTop: 25, paddingRight: 0, paddingLeft: 0, paddingBottom: 0, width: 25, height: 25)
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc func handleInputChange() {
@@ -143,14 +158,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         guard let username = usernameTxtField.text, username.count > 0 else { return }
         guard let password = passwordTxtField.text, password.count > 0 else { return }
         
+        activityIndicator.startAnimating()
+        
         Auth.auth().createUser(withEmail: email, password: password) { (authDataRes, error) in
             if let err = error {
                 debugPrint("failed to create user: \(err.localizedDescription)")
+                self.activityIndicator.stopAnimating()
                 return
             }
             guard let user = authDataRes?.user else { return }
             guard let image = self.plusButton.imageView?.image else { return }
             guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
+            
+            let changeRequest = user.createProfileChangeRequest()
+            changeRequest.displayName = username
+            changeRequest.commitChanges(completion: nil)
             
             self.uploadImageToFIR(uploadData: uploadData, completion: { (success, downloadUrl) in
                 if success {
@@ -166,6 +188,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     
                     self.setUserInFIR(newUser: newUser)
                 } else {
+                    self.activityIndicator.stopAnimating()
                     debugPrint("failed to upload image or to get download url")
                 }
             })
@@ -209,10 +232,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             .updateChildValues(newUser, withCompletionBlock: { (error, ref) in
                 if let err = error {
                     debugPrint("Failed name assignment: \(err.localizedDescription)")
-                    return
+                } else {
+                    print("success")
                 }
-                
-                print("success")
+                self.activityIndicator.stopAnimating()
             })
     }
 }
