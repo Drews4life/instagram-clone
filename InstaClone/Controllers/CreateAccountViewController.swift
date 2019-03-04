@@ -69,6 +69,26 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
         return button
     }()
     
+    let backToLogin: UIButton = {
+        let btn = UIButton(type: .system)
+        
+        let attributedString = NSMutableAttributedString(string: "Already have an account?  ", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray
+            ])
+        
+        attributedString.append(NSAttributedString(string: "Back to Log in!", attributes: [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14),
+            NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.06666666667, green: 0.6039215686, blue: 0.9294117647, alpha: 1)
+            ]))
+        
+        btn.setAttributedTitle(attributedString, for: .normal)
+        
+        btn.addTarget(self, action: #selector(navigateToCreateAccount), for: .touchUpInside)
+        
+        return btn
+    }()
+    
     let activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
         activity.color = .black
@@ -82,6 +102,9 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
        
         view.backgroundColor = .white
         view.addSubview(plusButton)
+        view.addSubview(backToLogin)
+        
+        backToLogin.anchor(top: nil, left: view.leftAnchor, right: view.rightAnchor, bottom: view.bottomAnchor, paddingTop: 0, paddingRight: 0, paddingLeft: 0, paddingBottom: 0, width: 0, height: 50)
         
         plusButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         plusButton.anchor(top: view.topAnchor, left: nil, right: nil, bottom: nil, paddingTop: 40, paddingRight: 0, paddingLeft: 0, paddingBottom: 0, width: 140, height: 140)
@@ -91,7 +114,7 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
        
     }
     
-    func setupInputFields() {
+    fileprivate func setupInputFields() {
         let stackView = UIStackView(arrangedSubviews: [
             emailTxtField,
             usernameTxtField,
@@ -151,6 +174,10 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
         plusButton.layer.masksToBounds = true
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func navigateToCreateAccount() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleSignUp() {
@@ -230,13 +257,20 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
             .reference()
             .child("users/")
             .updateChildValues(newUser, withCompletionBlock: { (error, ref) in
+                
+                self.activityIndicator.stopAnimating()
+                
                 if let err = error {
                     debugPrint("Failed name assignment: \(err.localizedDescription)")
-                } else {
-                    print("success")
+                    return
                 }
-                self.activityIndicator.stopAnimating()
-            })
+                
+                guard let mainTabVC = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+                mainTabVC.setupTabNavigation()
+                
+                self.present(mainTabVC, animated: true, completion: nil)
+                
+        })
     }
 }
 
