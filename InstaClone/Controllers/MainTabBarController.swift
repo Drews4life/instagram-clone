@@ -9,11 +9,12 @@
 import UIKit
 import FirebaseAuth
 
-class MainTabBarController: UITabBarController {
-    
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.delegate = self
         
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
@@ -29,6 +30,80 @@ class MainTabBarController: UITabBarController {
     }
     
     func setupTabNavigation() {
+        let homeVC = setTemplateController(UIImage(named: "home_unselected"), UIImage(named: "home_selected"))
+        let searchVC = setTemplateController(UIImage(named: "search_unselected"), UIImage(named: "search_selected"))
+        let plusVC = setTemplateController(UIImage(named: "plus_unselected"), UIImage(named: "plus_unselected"))
+        let likeVC = setTemplateController(UIImage(named: "like_unselected"), UIImage(named: "like_selected"))
+        let userProfileVC = setUserProfileVC()
+        
+        tabBar.tintColor = .black
+        
+        viewControllers = [homeVC, searchVC, plusVC, likeVC, userProfileVC]
+        
+        //tabbar insets
+        
+        if let items = tabBar.items {
+            for item in items {
+                item.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+            }
+        }
+    }
+    
+    fileprivate func setTemplateController(_ unselectedImage: UIImage?, _ selectedImage: UIImage?, _ rootViewController: UIViewController = UIViewController()) -> UINavigationController {
+        
+        guard let selectedImage = selectedImage else { return UINavigationController() }
+        guard let unselectedImage = unselectedImage else { return UINavigationController() }
+        
+        let homeVC = rootViewController
+        
+        let navController = UINavigationController(rootViewController: homeVC)
+        
+        navController.tabBarItem.image = unselectedImage
+        navController.tabBarItem.selectedImage = selectedImage
+        
+        return navController
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        let index = viewControllers?.index(of: viewController)
+        
+        if index == 2 {
+            let layout = UICollectionViewFlowLayout()
+            let addPhotoVC = AddPhotoViewController(collectionViewLayout: layout)
+            let navController = UINavigationController(rootViewController: addPhotoVC)
+            
+            present(navController, animated: true, completion: nil)
+            
+            return false
+        }
+        
+        return true
+    }
+//    fileprivate func setHomeVC() -> UIViewController {
+//        let homeVC = UIViewController()
+//
+//        let navController = UINavigationController(rootViewController: homeVC)
+//
+//        navController.tabBarItem.image = UIImage(named: "home_unselected")
+//        navController.tabBarItem.selectedImage = UIImage(named: "home_selected")
+//
+//        return navController
+//    }
+//
+//    fileprivate func setSearchVC() -> UIViewController {
+//        let searchVC = UIViewController()
+//
+//        let navController = UINavigationController(rootViewController: searchVC)
+//
+//        navController.tabBarItem.image = UIImage(named: "search_unselected")
+//        navController.tabBarItem.selectedImage = UIImage(named: "search_selected")
+//
+//        return navController
+//    }
+    
+    
+    fileprivate func setUserProfileVC() -> UIViewController {
         let layout = UICollectionViewFlowLayout()
         let userProfileVC = UserProfileViewController(collectionViewLayout: layout)
         
@@ -37,8 +112,6 @@ class MainTabBarController: UITabBarController {
         navController.tabBarItem.image = UIImage(named: "profile_unselected")
         navController.tabBarItem.selectedImage = UIImage(named: "profile_selected")
         
-        tabBar.tintColor = .black
-        
-        viewControllers = [navController, UIViewController()]
+        return navController
     }
 }

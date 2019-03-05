@@ -18,6 +18,7 @@
 		66090681222B073C00ABDEF6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090680222B073C00ABDEF6 /* MainTabBarController.swift */; };
 		66090684222B085A00ABDEF6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090683222B085A00ABDEF6 /* UserProfileViewController.swift */; };
 		66090687222B17CB00ABDEF6 /* UserHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090686222B17CB00ABDEF6 /* UserHeader.swift */; };
+		66097B72222F178D006E4C4E /* AddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66097B71222F178D006E4C4E /* AddPhotoViewController.swift */; };
 		660ABDBC222C3BAD00AAB7A3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660ABDBB222C3BAD00AAB7A3 /* User.swift */; };
 		660ABDBE222C621900AAB7A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660ABDBD222C621900AAB7A3 /* Constants.swift */; };
 		660ABDC0222C6AA700AAB7A3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */; };
@@ -39,6 +40,7 @@
 		66090680222B073C00ABDEF6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		66090683222B085A00ABDEF6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		66090686222B17CB00ABDEF6 /* UserHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeader.swift; sourceTree = "<group>"; };
+		66097B71222F178D006E4C4E /* AddPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewController.swift; sourceTree = "<group>"; };
 		660ABDBB222C3BAD00AAB7A3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		660ABDBD222C621900AAB7A3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			children = (
 				6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */,
 				660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */,
+				66097B71222F178D006E4C4E /* AddPhotoViewController.swift */,
 				66090680222B073C00ABDEF6 /* MainTabBarController.swift */,
 				66090683222B085A00ABDEF6 /* UserProfileViewController.swift */,
 			);
@@ -294,6 +297,7 @@
 				66090681222B073C00ABDEF6 /* MainTabBarController.swift in Sources */,
 				66090669222AB23200ABDEF6 /* AppDelegate.swift in Sources */,
 				66090687222B17CB00ABDEF6 /* UserHeader.swift in Sources */,
+				66097B72222F178D006E4C4E /* AddPhotoViewController.swift in Sources */,
 				660ABDBC222C3BAD00AAB7A3 /* User.swift in Sources */,
 				660ABDBE222C621900AAB7A3 /* Constants.swift in Sources */,
 			);
