@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
@@ -80,28 +80,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         return true
     }
-//    fileprivate func setHomeVC() -> UIViewController {
-//        let homeVC = UIViewController()
-//
-//        let navController = UINavigationController(rootViewController: homeVC)
-//
-//        navController.tabBarItem.image = UIImage(named: "home_unselected")
-//        navController.tabBarItem.selectedImage = UIImage(named: "home_selected")
-//
-//        return navController
-//    }
-//
-//    fileprivate func setSearchVC() -> UIViewController {
-//        let searchVC = UIViewController()
-//
-//        let navController = UINavigationController(rootViewController: searchVC)
-//
-//        navController.tabBarItem.image = UIImage(named: "search_unselected")
-//        navController.tabBarItem.selectedImage = UIImage(named: "search_selected")
-//
-//        return navController
-//    }
-    
     
     fileprivate func setUserProfileVC() -> UIViewController {
         let layout = UICollectionViewFlowLayout()
