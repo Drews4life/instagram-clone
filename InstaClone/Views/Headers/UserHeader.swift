@@ -10,8 +10,8 @@ import UIKit
 
 class UserHeader: UICollectionViewCell {
     
-    let profileImageView: UIImageView = {
-        let img = UIImageView()
+    let profileImageView: CustomazibleImageView = {
+        let img = CustomazibleImageView()
         img.backgroundColor = .white
         img.layer.cornerRadius = 80 / 2
         img.clipsToBounds = true
@@ -114,7 +114,9 @@ class UserHeader: UICollectionViewCell {
     var user: User? {
         didSet {
             self.usernameLbl.text = user?.username ?? "You"
-            self.setupProfileImg()
+            
+            guard let imgUrl = user?.profileImgUrl else { return }
+            self.profileImageView.fetchImage(withUrlString: imgUrl)
         }
     }
     
@@ -176,24 +178,6 @@ class UserHeader: UICollectionViewCell {
         stack.anchor(top: topAnchor, left: profileImageView.rightAnchor, right: rightAnchor, bottom: nil, paddingTop: 10, paddingRight: 12, paddingLeft: 12, paddingBottom: 0, width: 0, height: 50)
     }
     
-    fileprivate func setupProfileImg() {
-        guard let profileImgUrl = user?.profileImgUrl else { return }
-        guard let url = URL(string: profileImgUrl) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let err = error {
-                debugPrint("Cannot get image: \(err.localizedDescription)")
-                return;
-            }
-            
-            guard let data = data else { return }
-            
-            DispatchQueue.main.async {
-                self.profileImageView.image = UIImage(data: data)
-            }
-            
-        }.resume()
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

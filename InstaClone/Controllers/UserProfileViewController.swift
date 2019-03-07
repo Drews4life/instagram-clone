@@ -12,6 +12,8 @@ import Firebase
 class UserProfileViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     private var user: User?
+    private var posts = [UserPost]()
+    private var postsRef: DatabaseReference = Database.database().reference().child("posts")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +25,53 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         fetchUser()
         
         collectionView.register(UserHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerId")
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: USER_PROFILE_PHOTO_CELL)
+        collectionView.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: USER_PROFILE_PHOTO_CELL)
         
         setupLogoutBtn()
+        
+        //loadAllUserPosts()
+        loadNewUserPost()
     }
+    
+  
+    fileprivate func loadNewUserPost() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        postsRef
+            .child(uid)
+            .queryOrdered(byChild: "creationDate")
+            .observe(.childAdded, with: { (snapshot) in
+                guard let postDictionary = snapshot.value as? [String : Any] else { return }
+                
+                let post = UserPost(dictionary: postDictionary)
+                self.posts.append(post)
+                self.collectionView.reloadData()
+                
+        }) { (error) in
+                debugPrint("Could not append child: \(error.localizedDescription)")
+        }
+    }
+    
+//    fileprivate func loadAllUserPosts() {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//
+//        postsRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+//            guard let snapDictionary = snapshot.value as? [String : Any] else { return }
+//
+//            snapDictionary.forEach({ (key, value) in
+//
+//                guard let postDictionary = value as? [String : Any] else { return }
+//
+//                let post = UserPost(dictionary: postDictionary)
+//
+//                self.posts.append(post)
+//            })
+//
+//            self.collectionView.reloadData()
+//        }) { (error) in
+//            debugPrint("Could not fetch user posts: \(error.localizedDescription)")
+//        }
+//    }
     
     fileprivate func setupLogoutBtn() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "gear")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.handleLogout))
@@ -71,7 +116,7 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -83,9 +128,9 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_PROFILE_PHOTO_CELL, for: indexPath) as? UICollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_PROFILE_PHOTO_CELL, for: indexPath) as? UserProfilePhotoCell else { return UserProfilePhotoCell() }
         
-        cell.backgroundColor = .red
+        cell.post = posts[indexPath.item]
         
         return cell
     }

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SharePhotoViewController: UIViewController {
+class SharePhotoViewController: UIViewController, UITextViewDelegate {
     
     var selectedImage: UIImage? {
         didSet {
@@ -19,7 +19,6 @@ class SharePhotoViewController: UIViewController {
     
     var photoThumbnail: UIImageView = {
         let img = UIImageView()
-        //img.backgroundColor = .blue
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         
@@ -28,11 +27,21 @@ class SharePhotoViewController: UIViewController {
     
     private var userInput: UITextView = {
         let txt = UITextView()
-        txt.font = UIFont.systemFont(ofSize: 14)
+        txt.font = UIFont.systemFont(ofSize: 16)
+        
+        let attributedText = NSAttributedString(string: "Your caption goes here!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        txt.attributedText = attributedText
         
         return txt
     }()
     
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.color = .black
+        activity.stopAnimating()
+        
+        return activity
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +49,8 @@ class SharePhotoViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(onShareClick))
+        
+        userInput.delegate = self
         
         setupView()
     }
@@ -49,6 +60,7 @@ class SharePhotoViewController: UIViewController {
         containerView.backgroundColor = .white
         
         view.addSubview(containerView)
+        view.addSubview(activityIndicator)
         containerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: nil, paddingTop: 0, paddingRight: 0, paddingLeft: 0, paddingBottom: 0, width: 0, height: 100)
         
         containerView.addSubview(photoThumbnail)
@@ -56,10 +68,20 @@ class SharePhotoViewController: UIViewController {
         
         containerView.addSubview(userInput)
         userInput.anchor(top: containerView.topAnchor, left: photoThumbnail.rightAnchor, right: containerView.rightAnchor, bottom: containerView.bottomAnchor, paddingTop: 0, paddingRight: 0, paddingLeft: 4, paddingBottom: 0, width: 0, height: 0)
+        
+        activityIndicator.anchor(top: containerView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, bottom: nil, paddingTop: 12, paddingRight: 0, paddingLeft: 0, paddingBottom: 0, width: 30, height: 30)
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        userInput.text = ""
+        userInput.typingAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)
+        ]
     }
     
     @objc func onShareClick() {
@@ -69,6 +91,7 @@ class SharePhotoViewController: UIViewController {
         guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
         
         navigationItem.rightBarButtonItem?.isEnabled = false
+        activityIndicator.startAnimating()
         
         let filename = NSUUID().uuidString
         let storageRef = Storage
@@ -82,6 +105,7 @@ class SharePhotoViewController: UIViewController {
             .putData(uploadData, metadata: nil) { (metadata, error) in
                 if let err = error {
                     self.navigationItem.rightBarButtonItem?.isEnabled = true
+                    self.activityIndicator.stopAnimating()
                     debugPrint("Could not upload image: \(err.localizedDescription)")
                     return
                 }
@@ -89,6 +113,7 @@ class SharePhotoViewController: UIViewController {
                 storageRef.downloadURL(completion: { (url, error) in
                     if let err = error {
                         self.navigationItem.rightBarButtonItem?.isEnabled = true
+                        self.activityIndicator.stopAnimating()
                         debugPrint("Could not get url for images: \(err.localizedDescription)")
                         return
                     }
@@ -119,6 +144,7 @@ class SharePhotoViewController: UIViewController {
             .updateChildValues(values) { (error, ref) in
                 
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.activityIndicator.stopAnimating()
                 
                 if let err = error {
                     debugPrint("Could not update posts in db \(err.localizedDescription)")
