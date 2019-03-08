@@ -30,8 +30,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupTabNavigation() {
-        let homeVC = setTemplateController(UIImage(named: "home_unselected"), UIImage(named: "home_selected"))
-        let searchVC = setTemplateController(UIImage(named: "search_unselected"), UIImage(named: "search_selected"))
+        let homeVC = setTemplateController(UIImage(named: "home_unselected"), UIImage(named: "home_selected"), HomeViewController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let searchVC = setTemplateController(UIImage(named: "search_unselected"), UIImage(named: "search_selected"), SearchViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         let plusVC = setTemplateController(UIImage(named: "plus_unselected"), UIImage(named: "plus_unselected"))
         let likeVC = setTemplateController(UIImage(named: "like_unselected"), UIImage(named: "like_selected"))
         let userProfileVC = setUserProfileVC()

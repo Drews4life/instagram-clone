@@ -8,6 +8,8 @@
 
 import UIKit
 
+var imageCache = [String: UIImage]()
+
 class CustomazibleImageView: UIImageView {
     
     var lastUsedURL: String?
@@ -15,6 +17,11 @@ class CustomazibleImageView: UIImageView {
     func fetchImage(withUrlString url: String) {
         
         lastUsedURL = url
+        
+        if let cachedImg = imageCache[url] {
+            self.image = cachedImg
+            return
+        }
         
         guard let downloadUrl = URL(string: url) else { return }
         
@@ -29,9 +36,12 @@ class CustomazibleImageView: UIImageView {
             }
             
             guard let imgData = data else { return }
+            guard let image = UIImage(data: imgData) else { return }
+            
+            imageCache[downloadUrl.absoluteString] = image
             
             DispatchQueue.main.async {
-                self.image = UIImage(data: imgData)
+                self.image = image
             }
             
         }.resume()

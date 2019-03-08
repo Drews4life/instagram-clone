@@ -13,7 +13,6 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     
     private var user: User?
     private var posts = [UserPost]()
-    private var postsRef: DatabaseReference = Database.database().reference().child("posts")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,18 +32,19 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         loadNewUserPost()
     }
     
-  
     fileprivate func loadNewUserPost() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        postsRef
+        Database
+            .postsRef()
             .child(uid)
             .queryOrdered(byChild: "creationDate")
             .observe(.childAdded, with: { (snapshot) in
                 guard let postDictionary = snapshot.value as? [String : Any] else { return }
                 
-                let post = UserPost(dictionary: postDictionary)
-                self.posts.append(post)
+                guard let user = self.user else { return }
+                let post = UserPost(user: user, dictionary: postDictionary)
+                self.posts.insert(post, at: 0)
                 self.collectionView.reloadData()
                 
         }) { (error) in
@@ -52,26 +52,6 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         }
     }
     
-//    fileprivate func loadAllUserPosts() {
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//
-//        postsRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-//            guard let snapDictionary = snapshot.value as? [String : Any] else { return }
-//
-//            snapDictionary.forEach({ (key, value) in
-//
-//                guard let postDictionary = value as? [String : Any] else { return }
-//
-//                let post = UserPost(dictionary: postDictionary)
-//
-//                self.posts.append(post)
-//            })
-//
-//            self.collectionView.reloadData()
-//        }) { (error) in
-//            debugPrint("Could not fetch user posts: \(error.localizedDescription)")
-//        }
-//    }
     
     fileprivate func setupLogoutBtn() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "gear")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.handleLogout))
@@ -145,24 +125,14 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Database
-            .database()
-            .reference()
-            .child("users/")
-            .child(uid)
-            .observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.fetchUser(withUid: uid) { (success, user) in
+            if success {
+                guard let user = user else { return }
                 
-                guard let snapshot = snapshot.value as? [String: Any] else { return }
-                let username = snapshot["username"] as? String ?? ""
-                let profileImgUrl = snapshot["profileImageUrl"] as? String ?? ""
-                
-                self.user = User(username: username, profileImg: profileImgUrl)
-               
-                self.navigationItem.title = username
+                self.user = user
+                self.navigationItem.title = user.username
                 self.collectionView.reloadData()
-                
-            }) { (error) in
-                debugPrint("unable to retrieve user data: \(error.localizedDescription)")
+            }
         }
     }
 }

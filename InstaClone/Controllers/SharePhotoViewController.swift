@@ -136,9 +136,7 @@ class SharePhotoViewController: UIViewController, UITextViewDelegate {
         ]
         
         Database
-            .database()
-            .reference()
-            .child("posts")
+            .postsRef()
             .child(uid)
             .childByAutoId()
             .updateChildValues(values) { (error, ref) in
