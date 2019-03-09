@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		36CC75508B6F9F47F1434084 /* Pods_InstaClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 576B4CB685A0271AECFE8836 /* Pods_InstaClone.framework */; };
+		6606C29022343C170011A679 /* FirebaseExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6606C28F22343C170011A679 /* FirebaseExt.swift */; };
+		6606C29222343C430011A679 /* HelperExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6606C29122343C430011A679 /* HelperExt.swift */; };
+		6606C29522344E160011A679 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6606C29422344E160011A679 /* CameraViewController.swift */; };
 		66090669222AB23200ABDEF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090668222AB23200ABDEF6 /* AppDelegate.swift */; };
 		6609066B222AB23200ABDEF6 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */; };
 		6609066E222AB23200ABDEF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6609066C222AB23200ABDEF6 /* Main.storyboard */; };
@@ -38,6 +41,9 @@
 		22A3ABD258FA7985B3B275FC /* Pods-InstaClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaClone.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstaClone/Pods-InstaClone.release.xcconfig"; sourceTree = "<group>"; };
 		576B4CB685A0271AECFE8836 /* Pods_InstaClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstaClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CB5831074D06A8F7DF6DC3F /* Pods-InstaClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaClone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstaClone/Pods-InstaClone.debug.xcconfig"; sourceTree = "<group>"; };
+		6606C28F22343C170011A679 /* FirebaseExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseExt.swift; sourceTree = "<group>"; };
+		6606C29122343C430011A679 /* HelperExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExt.swift; sourceTree = "<group>"; };
+		6606C29422344E160011A679 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		66090665222AB23200ABDEF6 /* InstaClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66090668222AB23200ABDEF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				6609067C222AC4E300ABDEF6 /* UIViewExt.swift */,
+				6606C28F22343C170011A679 /* FirebaseExt.swift */,
+				6606C29122343C430011A679 /* HelperExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -151,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				661DF3FC223284CA000975DB /* HomeViewController.swift */,
+				6606C29422344E160011A679 /* CameraViewController.swift */,
 				661DF4002232ED8E000975DB /* SearchViewController.swift */,
 				6609066A222AB23200ABDEF6 /* CreateAccountViewController.swift */,
 				660ABDBF222C6AA700AAB7A3 /* LoginViewController.swift */,
@@ -337,12 +346,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				661DF4032232F18B000975DB /* SearchUserCell.swift in Sources */,
+				6606C29222343C430011A679 /* HelperExt.swift in Sources */,
 				660ABDC0222C6AA700AAB7A3 /* LoginViewController.swift in Sources */,
+				6606C29522344E160011A679 /* CameraViewController.swift in Sources */,
 				6609067D222AC4E300ABDEF6 /* UIViewExt.swift in Sources */,
 				66090684222B085A00ABDEF6 /* UserProfileViewController.swift in Sources */,
 				661DF3FD223284CA000975DB /* HomeViewController.swift in Sources */,
 				661DF4012232ED8E000975DB /* SearchViewController.swift in Sources */,
 				6609066B222AB23200ABDEF6 /* CreateAccountViewController.swift in Sources */,
+				6606C29022343C170011A679 /* FirebaseExt.swift in Sources */,
 				66EC80FF2231AA7800CC8545 /* CustomizableImageView.swift in Sources */,
 				66090681222B073C00ABDEF6 /* MainTabBarController.swift in Sources */,
 				66EC80FD2231867A00CC8545 /* UserProfilePhotoCell.swift in Sources */,

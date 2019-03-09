@@ -12,11 +12,15 @@ struct UserPost {
     
     public private(set) var imageUrl: String
     public private(set) var caption: String
+    public private(set) var creationDate: Date
     public private(set) var user: User
     
     init(user: User, dictionary: [String : Any]) {
         self.imageUrl = dictionary["imageUrl"] as? String ?? ""
         self.caption = dictionary["postMessage"] as? String ?? ""
         self.user = user
+        
+        let secondsFrom1970 = dictionary["creationDate"] as? Double ?? 0
+        self.creationDate = Date(timeIntervalSince1970: secondsFrom1970)
     }
 }

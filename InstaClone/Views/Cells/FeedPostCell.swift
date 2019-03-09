@@ -125,12 +125,15 @@ class FeedPostCell: UICollectionViewCell {
         
         attributedText.append(NSAttributedString(string: "\n\n", attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)
-            ]))
+        ]))
         
-        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [
+        
+        let timeAgo = post.creationDate.timeAgo()
+        
+        attributedText.append(NSAttributedString(string: "\(timeAgo)", attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.gray,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13)
-            ]))
+        ]))
         
         self.captionLbl.attributedText = attributedText
     }

@@ -17,22 +17,72 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: NEW_PHOTO_UPLOADED_NOTIFICATION, object: nil)
     
         collectionView.backgroundColor = .white
         collectionView.register(FeedPostCell.self, forCellWithReuseIdentifier: FEED_POST_CELL)
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
+        
         setupNavBar()
-        fetchFeedPosts()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            fetchFeedPosts(withId: uid)
+            fetchUserIds()
+        }
     }
     
     fileprivate func setupNavBar() {
         navigationItem.titleView = UIImageView(image: UIImage(named: "logo2")?.withRenderingMode(.alwaysOriginal))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera3")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(showCamera))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "send2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onMessageViewClick))
     }
     
-    fileprivate func fetchFeedPosts() {
+    @objc func handleRefresh() {
+        if let uid = Auth.auth().currentUser?.uid {
+            posts.removeAll()
+            
+            fetchFeedPosts(withId: uid)
+            fetchUserIds()
+        }
+        
+    }
+    
+    @objc func showCamera() {
+        let cameraVC = CameraViewController()
+        
+        self.present(cameraVC, animated: true, completion: nil)
+    }
+    
+    @objc func onMessageViewClick() {
+        
+    }
+    
+    fileprivate func fetchUserIds() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Database.fetchUser(withUid: uid) { (success, user) in
+        Database
+            .followingRef()
+            .child(uid)
+            .observeSingleEvent(of: .value, with: { (snapshot) in
+                guard let idsDictionary = snapshot.value as? [String : Any] else { return }
+                
+                idsDictionary.forEach({ (key, _) in
+                    self.fetchFeedPosts(withId: key)
+                })
+                
+            }) { (error) in
+                debugPrint("Unable to fetch following users ids: \(error.localizedDescription)")
+        }
+    }
+    
+    fileprivate func fetchFeedPosts(withId id: String) {
+        //guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        Database.fetchUser(withUid: id) { (success, user) in
             if !success {
                 debugPrint("Unable to fetch user")
             } else {
@@ -48,6 +98,8 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             .queryOrdered(byChild: "creationDate")
             .observeSingleEvent(of: .value, with: { (snapshot) in
                 
+                self.collectionView.refreshControl?.endRefreshing()
+                
                 guard let snapDictionary = snapshot.value as? [String : Any] else { return }
                 
                 snapDictionary.forEach({ (key, value) in
@@ -58,6 +110,9 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                     self.posts.append(post)
                 })
                 
+                self.posts.sort(by: { (post1, post2) -> Bool in
+                    return post1.creationDate.compare(post2.creationDate) == .orderedDescending
+                })
                 self.collectionView.reloadData()
                 
             }) { (error) in

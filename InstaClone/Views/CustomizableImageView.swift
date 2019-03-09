@@ -18,6 +18,8 @@ class CustomazibleImageView: UIImageView {
         
         lastUsedURL = url
         
+        self.image = nil
+        
         if let cachedImg = imageCache[url] {
             self.image = cachedImg
             return

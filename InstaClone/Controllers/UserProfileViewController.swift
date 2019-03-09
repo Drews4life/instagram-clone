@@ -14,12 +14,12 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     private var user: User?
     private var posts = [UserPost]()
     
+    var userId: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.backgroundColor = .white
-        
-        navigationItem.title = Auth.auth().currentUser?.displayName ?? "Your Profile"
         
         fetchUser()
         
@@ -27,14 +27,9 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         collectionView.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: USER_PROFILE_PHOTO_CELL)
         
         setupLogoutBtn()
-        
-        //loadAllUserPosts()
-        loadNewUserPost()
     }
     
-    fileprivate func loadNewUserPost() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
+    fileprivate func loadNewUserPost(forUid uid: String) {
         Database
             .postsRef()
             .child(uid)
@@ -124,14 +119,17 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     fileprivate func fetchUser() {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        let uidToSearch = userId ?? uid
         
-        Database.fetchUser(withUid: uid) { (success, user) in
+        Database.fetchUser(withUid: uidToSearch) { (success, user) in
             if success {
                 guard let user = user else { return }
                 
                 self.user = user
                 self.navigationItem.title = user.username
                 self.collectionView.reloadData()
+                
+                self.loadNewUserPost(forUid: uidToSearch)
             }
         }
     }

@@ -265,9 +265,8 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
                 
                 guard let mainTabVC = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
                 mainTabVC.setupTabNavigation()
-                
-                self.present(mainTabVC, animated: true, completion: nil)
-                
+               
+                self.dismiss(animated: true, completion: nil)
         })
     }
 }

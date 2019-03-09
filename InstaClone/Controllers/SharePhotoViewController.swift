@@ -150,6 +150,8 @@ class SharePhotoViewController: UIViewController, UITextViewDelegate {
                 }
 
                 self.dismiss(animated: true, completion: nil)
+                
+                NotificationCenter.default.post(name: NEW_PHOTO_UPLOADED_NOTIFICATION, object: nil)
         }
     }
 }
