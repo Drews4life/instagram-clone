@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 
-class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, FeedPostCellDelegate {
+    
     private let postsRef = Database.database().reference().child("posts")
     private let usersRef = Database.database().reference().child("users")
     
@@ -33,6 +34,36 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             fetchFeedPosts(withId: uid)
             fetchUserIds()
         }
+    }
+    
+    func onLikeTap(forCell cell: FeedPostCell) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        var post = self.posts[indexPath.item]
+        guard let postId = post.id else { return }
+        
+        let values = [uid: post.isLiked ? 0 : 1]
+        
+        Database
+            .likesRef()
+            .child(postId)
+            .updateChildValues(values) { (error, ref) in
+                if let err = error {
+                    debugPrint("Could not like the post with error: \(err.localizedDescription)")
+                    return
+                }
+                
+                post.isLiked = !post.isLiked
+                self.posts[indexPath.item] = post
+                self.collectionView.reloadItems(at: [indexPath])
+        }
+    }
+    
+    func onCommentTap(post: UserPost) {
+        let commentsVC = CommentsViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        commentsVC.post = post
+        navigationController?.pushViewController(commentsVC, animated: true)
     }
     
     fileprivate func setupNavBar() {
@@ -105,15 +136,33 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                 snapDictionary.forEach({ (key, value) in
                     guard let dictionary = value as? [String : Any] else { return }
                     
+                    var post = UserPost(user: user, dictionary: dictionary)
+                    post.id = key
                     
-                    let post = UserPost(user: user, dictionary: dictionary)
-                    self.posts.append(post)
+                    guard let uid = Auth.auth().currentUser?.uid else { return }
+                    Database
+                        .likesRef()
+                        .child(key)
+                        .child(uid)
+                        .observeSingleEvent(of: .value, with: { (snapshot) in
+                           
+                            if let value = snapshot.value as? Int, value == 1 {
+                                post.isLiked = true
+                            } else {
+                                post.isLiked = false
+                            }
+                            
+                            self.posts.append(post)
+                            self.posts.sort(by: { (post1, post2) -> Bool in
+                                return post1.creationDate.compare(post2.creationDate) == .orderedDescending
+                            })
+                            self.collectionView.reloadData()
+                            
+                        }, withCancel: { (error) in
+                            debugPrint("Could not fetch likes for post: \(error.localizedDescription)")
+                        })
+                    
                 })
-                
-                self.posts.sort(by: { (post1, post2) -> Bool in
-                    return post1.creationDate.compare(post2.creationDate) == .orderedDescending
-                })
-                self.collectionView.reloadData()
                 
             }) { (error) in
                 debugPrint("Unable to fetch all feed posts: \(error.localizedDescription)")
@@ -145,6 +194,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FEED_POST_CELL, for: indexPath) as? FeedPostCell else { return FeedPostCell() }
         
         cell.post = self.posts[indexPath.item]
+        cell.delegate = self
         
         return cell
     }

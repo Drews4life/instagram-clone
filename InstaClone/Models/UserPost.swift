@@ -10,10 +10,14 @@ import Foundation
 
 struct UserPost {
     
+    public var id: String?
+    
     public private(set) var imageUrl: String
     public private(set) var caption: String
     public private(set) var creationDate: Date
     public private(set) var user: User
+    
+    public var isLiked = false
     
     init(user: User, dictionary: [String : Any]) {
         self.imageUrl = dictionary["imageUrl"] as? String ?? ""

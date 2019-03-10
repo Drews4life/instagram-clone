@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol FeedPostCellDelegate {
+    func onCommentTap(post: UserPost)
+    func onLikeTap(forCell cell: FeedPostCell)
+}
+
 class FeedPostCell: UICollectionViewCell {
+    
+    var delegate: FeedPostCellDelegate?
     
     var post: UserPost? {
         didSet {
@@ -18,6 +25,10 @@ class FeedPostCell: UICollectionViewCell {
             self.photoImageView.fetchImage(withUrlString: postImg)
             self.userProfileImageView.fetchImage(withUrlString: userProfileImg)
             
+            guard let isLiked = post?.isLiked else { return }
+            let likedImage = isLiked ? UIImage(named: "like_selected") : UIImage(named: "like_unselected")
+            
+            likeBtn.setImage(likedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
             usernameLbl.text = post?.user.username
             setupAttributedCaption()
         }
@@ -56,16 +67,18 @@ class FeedPostCell: UICollectionViewCell {
         return btn
     }()
     
-    let likeBtn: UIButton = {
+    lazy var likeBtn: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "like_unselected")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        btn.addTarget(self, action: #selector(onLikeClick), for: .touchUpInside)
         
         return btn
     }()
     
-    let commentBtn: UIButton = {
+    lazy var commentBtn: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "comment")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        btn.addTarget(self, action: #selector(onCommentClick), for: .touchUpInside)
         
         return btn
     }()
@@ -154,6 +167,15 @@ class FeedPostCell: UICollectionViewCell {
         addSubview(saveBtn)
         
         saveBtn.anchor(top: photoImageView.bottomAnchor, left: nil, right: rightAnchor, bottom: nil, paddingTop: 0, paddingRight: 4, paddingLeft: 0, paddingBottom: 0, width: 40, height: 50)
+    }
+    
+    @objc func onCommentClick() {
+        guard let post = self.post else { return }
+        delegate?.onCommentTap(post: post)
+    }
+    
+    @objc func onLikeClick() {
+        delegate?.onLikeTap(forCell: self)
     }
     
     required init?(coder aDecoder: NSCoder) {

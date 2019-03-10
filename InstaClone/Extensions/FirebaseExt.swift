@@ -39,5 +39,13 @@ extension Database {
     static func followingRef() -> DatabaseReference {
         return self.database().reference().child("following")
     }
+    
+    static func commentsRef() -> DatabaseReference {
+        return self.database().reference().child("comments")
+    }
+    
+    static func likesRef() -> DatabaseReference {
+        return self.database().reference().child("likes")
+    }
 }
 
