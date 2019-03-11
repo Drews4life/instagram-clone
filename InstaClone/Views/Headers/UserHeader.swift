@@ -13,7 +13,14 @@ enum ButtonStyle {
     case blue, white
 }
 
+protocol UserHeaderDelegate {
+    func onChangeGridToList()
+    func onChangeListToGrid()
+}
+
 class UserHeader: UICollectionViewCell {
+    
+    var delegate: UserHeaderDelegate?
     
     let profileImageView: CustomazibleImageView = {
         let img = CustomazibleImageView()
@@ -24,18 +31,19 @@ class UserHeader: UICollectionViewCell {
         return img
     }()
     
-    let gridButton: UIButton = {
+    lazy var gridButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "grid"), for: .normal)
-        //btn.tintColor = UIColor(white: 0, alpha: 0.1)
+        btn.addTarget(self, action: #selector(changeListToGrid), for: .touchUpInside)
         
         return btn
     }()
     
-    let listButton: UIButton = {
+    lazy var listButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "list"), for: .normal)
         btn.tintColor = UIColor(white: 0, alpha: 0.3)
+        btn.addTarget(self, action: #selector(changeGridToList), for: .touchUpInside)
         
         return btn
     }()
@@ -167,6 +175,20 @@ class UserHeader: UICollectionViewCell {
                     }
             }
         }
+    }
+    
+    @objc func changeGridToList() {
+        listButton.tintColor = #colorLiteral(red: 0.06666666667, green: 0.6039215686, blue: 0.9294117647, alpha: 1)
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.3)
+        
+        delegate?.onChangeGridToList()
+    }
+    
+    @objc func changeListToGrid() {
+        listButton.tintColor = UIColor(white: 0, alpha: 0.3)
+        gridButton.tintColor = #colorLiteral(red: 0.06666666667, green: 0.6039215686, blue: 0.9294117647, alpha: 1)
+        
+        delegate?.onChangeListToGrid()
     }
     
     @objc func handleEditProfileOrFollow() {

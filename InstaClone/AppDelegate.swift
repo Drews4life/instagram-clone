@@ -8,9 +8,10 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -22,7 +23,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.rootViewController = MainTabBarController()
         
+        tryToRegisterForNotifications(application: application)
+        
         return true
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("registered with FCM and oken: ", fcmToken)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("registered for notif: ", deviceToken)
+    }
+    
+    private func tryToRegisterForNotifications(application: UIApplication) {
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { (granted, error) in
+            if let err = error {
+                debugPrint("failed to request authorization: \(err.localizedDescription)")
+                return
+            }
+            
+            if granted {
+                print("granted")
+            } else {
+                debugPrint("denied push access")
+            }
+        }
+        
+        application.registerForRemoteNotifications()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

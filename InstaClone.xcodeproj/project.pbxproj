@@ -23,7 +23,6 @@
 		66090670222AB23400ABDEF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6609066F222AB23400ABDEF6 /* Assets.xcassets */; };
 		66090673222AB23400ABDEF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66090671222AB23400ABDEF6 /* LaunchScreen.storyboard */; };
 		6609067D222AC4E300ABDEF6 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609067C222AC4E300ABDEF6 /* UIViewExt.swift */; };
-		6609067F222AC84600ABDEF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6609067E222AC84600ABDEF6 /* GoogleService-Info.plist */; };
 		66090681222B073C00ABDEF6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090680222B073C00ABDEF6 /* MainTabBarController.swift */; };
 		66090684222B085A00ABDEF6 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090683222B085A00ABDEF6 /* UserProfileViewController.swift */; };
 		66090687222B17CB00ABDEF6 /* UserHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66090686222B17CB00ABDEF6 /* UserHeader.swift */; };
@@ -38,6 +37,7 @@
 		661DF3FF223286F1000975DB /* FeedPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DF3FE223286F1000975DB /* FeedPostCell.swift */; };
 		661DF4012232ED8E000975DB /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DF4002232ED8E000975DB /* SearchViewController.swift */; };
 		661DF4032232F18B000975DB /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661DF4022232F18B000975DB /* SearchUserCell.swift */; };
+		6651FB292236EE3300DE657E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6651FB282236EE3300DE657E /* GoogleService-Info.plist */; };
 		66EC80FA223182EA00CC8545 /* UserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC80F9223182EA00CC8545 /* UserPost.swift */; };
 		66EC80FD2231867A00CC8545 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC80FC2231867A00CC8545 /* UserProfilePhotoCell.swift */; };
 		66EC80FF2231AA7800CC8545 /* CustomizableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EC80FE2231AA7800CC8545 /* CustomizableImageView.swift */; };
@@ -64,7 +64,6 @@
 		66090672222AB23400ABDEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66090674222AB23400ABDEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6609067C222AC4E300ABDEF6 /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
-		6609067E222AC84600ABDEF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66090680222B073C00ABDEF6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		66090683222B085A00ABDEF6 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		66090686222B17CB00ABDEF6 /* UserHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeader.swift; sourceTree = "<group>"; };
@@ -79,6 +78,8 @@
 		661DF3FE223286F1000975DB /* FeedPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostCell.swift; sourceTree = "<group>"; };
 		661DF4002232ED8E000975DB /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		661DF4022232F18B000975DB /* SearchUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
+		6651FB272236E86800DE657E /* InstaClone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InstaClone.entitlements; sourceTree = "<group>"; };
+		6651FB282236EE3300DE657E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66EC80F9223182EA00CC8545 /* UserPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPost.swift; sourceTree = "<group>"; };
 		66EC80FC2231867A00CC8545 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoCell.swift; sourceTree = "<group>"; };
 		66EC80FE2231AA7800CC8545 /* CustomizableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableImageView.swift; sourceTree = "<group>"; };
@@ -187,6 +188,7 @@
 		66090667222AB23200ABDEF6 /* InstaClone */ = {
 			isa = PBXGroup;
 			children = (
+				6651FB272236E86800DE657E /* InstaClone.entitlements */,
 				660ABDBA222C3B9500AAB7A3 /* Models */,
 				66090685222B17B500ABDEF6 /* Views */,
 				66090682222B07AE00ABDEF6 /* Controllers */,
@@ -197,7 +199,7 @@
 				6609066F222AB23400ABDEF6 /* Assets.xcassets */,
 				66090671222AB23400ABDEF6 /* LaunchScreen.storyboard */,
 				66090674222AB23400ABDEF6 /* Info.plist */,
-				6609067E222AC84600ABDEF6 /* GoogleService-Info.plist */,
+				6651FB282236EE3300DE657E /* GoogleService-Info.plist */,
 			);
 			path = InstaClone;
 			sourceTree = "<group>";
@@ -310,6 +312,11 @@
 				TargetAttributes = {
 					66090664222AB23200ABDEF6 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -337,9 +344,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				66090673222AB23400ABDEF6 /* LaunchScreen.storyboard in Resources */,
-				6609067F222AC84600ABDEF6 /* GoogleService-Info.plist in Resources */,
 				66090670222AB23400ABDEF6 /* Assets.xcassets in Resources */,
 				6609066E222AB23200ABDEF6 /* Main.storyboard in Resources */,
+				6651FB292236EE3300DE657E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +593,7 @@
 			baseConfigurationReference = 5CB5831074D06A8F7DF6DC3F /* Pods-InstaClone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = InstaClone/InstaClone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 42WC6KXEQ5;
 				INFOPLIST_FILE = InstaClone/Info.plist;
@@ -593,7 +601,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.opsus.InstaClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.opsus.InstaClone1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -605,6 +613,7 @@
 			baseConfigurationReference = 22A3ABD258FA7985B3B275FC /* Pods-InstaClone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = InstaClone/InstaClone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 42WC6KXEQ5;
 				INFOPLIST_FILE = InstaClone/Info.plist;
@@ -612,7 +621,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.opsus.InstaClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.opsus.InstaClone1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
