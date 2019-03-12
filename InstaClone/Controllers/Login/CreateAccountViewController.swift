@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseMessaging
 
 class CreateAccountViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -203,10 +204,12 @@ class CreateAccountViewController: UIViewController, UIImagePickerControllerDele
                 if success {
                     
                     guard let url = downloadUrl?.absoluteString else { return }
+                    guard let fcmToken = Messaging.messaging().fcmToken else { return }
                     
                     let userValues: [String : Any] = [
                         "username": username,
-                        "profileImageUrl": url
+                        "profileImageUrl": url,
+                        "fcmToken": fcmToken
                     ]
                     
                     let newUser = [user.uid: userValues]

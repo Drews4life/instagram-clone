@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import UserNotifications
+import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
@@ -29,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("registered with FCM and oken: ", fcmToken)
+       
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -37,7 +38,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("registered for notif: ", deviceToken)
+       
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let followerId = userInfo["followerId"] as? String {
+            let userProfileVC = UserProfileViewController(collectionViewLayout: UICollectionViewFlowLayout())
+            userProfileVC.userId = followerId
+            
+            if let mainTabBarVC = window?.rootViewController as? MainTabBarController {
+                
+                mainTabBarVC.selectedIndex = 0
+                mainTabBarVC.presentedViewController?.dismiss(animated: true, completion: nil)
+                
+                if let homeVC = mainTabBarVC.viewControllers?.first as? UINavigationController {
+                    homeVC.pushViewController(userProfileVC, animated: true)
+                }
+            }
+        }
     }
     
     private func tryToRegisterForNotifications(application: UIApplication) {

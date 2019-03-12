@@ -9,43 +9,18 @@
 import UIKit
 import Firebase
 
-class CommentsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class CommentsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CommentInputViewDelegate {
     
     var post: UserPost?
     var comments = [Comment]()
     
-    let commentTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Enter your comment..."
-        
-        return textField
-    }()
+   
     
-    lazy var containerView: UIView = {
-        let containerView = UIView()
-        containerView.backgroundColor = .white
-        containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+    lazy var containerView: CommentInputView = {
+        let commentInputView = CommentInputView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        commentInputView.delegate = self
         
-        let sendBtn = UIButton(type: .system)
-        sendBtn.setTitle("Send", for: .normal)
-        sendBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        sendBtn.addTarget(self, action: #selector(onCommentSubmit), for: .touchUpInside)
-        
-        containerView.addSubview(sendBtn)
-        sendBtn.anchor(top: containerView.topAnchor, left: nil, right: containerView.rightAnchor, bottom: containerView.bottomAnchor, paddingTop: 0, paddingRight: 12, paddingLeft: 0, paddingBottom: 0, width: 50, height: 0)
-        
-
-        containerView.addSubview(commentTextField)
-        commentTextField.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, right: sendBtn.leftAnchor, bottom: containerView.bottomAnchor, paddingTop: 0, paddingRight: 0, paddingLeft: 12, paddingBottom: 0, width: 0, height: 0)
-    
-        
-        let separator = UIView()
-        separator.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        containerView.addSubview(separator)
-        
-        separator.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor, bottom: nil, paddingTop: 0, paddingRight: 0, paddingLeft: 0, paddingBottom: 0, width: 0, height: 0.5)
-        
-        return containerView
+        return commentInputView
     }()
     
     override var inputAccessoryView: UIView? {
@@ -109,10 +84,7 @@ class CommentsViewController: UICollectionViewController, UICollectionViewDelega
         }
     }
     
-    @objc func onCommentSubmit() {
-        commentTextField.resignFirstResponder()
-        
-        guard let comment = commentTextField.text, comment.count > 0 else { return }
+    func didSubmit(comment: String, completion: @escaping (Bool) -> Void) {
         guard let postId = post?.id else { return }
         guard let userId = Auth.auth().currentUser?.uid else { return }
         
@@ -129,12 +101,15 @@ class CommentsViewController: UICollectionViewController, UICollectionViewDelega
             .updateChildValues(values) { (error, ref) in
                 if let err = error {
                     debugPrint("Received error while trying to get comments: \(err.localizedDescription)")
+                    completion(false)
                     return
                 }
                 
-                self.commentTextField.text = ""
+                completion(true)
+               
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
